@@ -1,0 +1,1527 @@
+DEBUG: Minify function called
+Initial input: function test(a, b) {
+		// This is a comment
+		return a + b;
+	}
+After license preservation: function test(a, b) {
+		// This is a comment
+		return a + b;
+	}
+After removing single-line comments: function test(a, b) {
+		
+		return a + b;
+	}
+After removing multi-line comments: function test(a, b) {
+		
+		return a + b;
+	}
+After trimming whitespace: function test(a, b) {
+		
+		return a + b;
+	}
+After replacing multiple spaces: function test(a, b) { return a + b; }
+After fixing operators: function test(a,b) { return a+b;}
+After removing semicolons: function test(a,b) { return a+b;}
+After fixing function spacing: function test(a,b) { return a+b;}
+After removing newlines: function test(a,b) { return a+b;}
+After removing bracket spaces: function test(a,b){return a+b;}
+Final result: function test(a,b){return a+b;}
+DEBUG: Minify function called
+Initial input: /*!
+ * License
+ */
+function test() {}
+After license preservation: 
+function test() {}
+After removing single-line comments: 
+function test() {}
+After removing multi-line comments: 
+function test() {}
+After trimming whitespace: function test() {}
+After replacing multiple spaces: function test() {}
+After fixing operators: function test() {}
+After removing semicolons: function test() {}
+After fixing function spacing: function test() {}
+After removing newlines: function test() {}
+After removing bracket spaces: function test(){}
+Final result: /*!
+ * License
+ */
+function test(){}
+DEBUG: Minify function called
+Initial input: const longVariableName = 42;
+	let anotherLongName = longVariableName + 1;
+After license preservation: const longVariableName = 42;
+	let anotherLongName = longVariableName + 1;
+After removing single-line comments: const longVariableName = 42;
+	let anotherLongName = longVariableName + 1;
+After removing multi-line comments: const longVariableName = 42;
+	let anotherLongName = longVariableName + 1;
+After trimming whitespace: const longVariableName = 42;
+	let anotherLongName = longVariableName + 1;
+After replacing multiple spaces: const longVariableName = 42; let anotherLongName = longVariableName + 1;
+After fixing operators: const longVariableName=42;let anotherLongName=longVariableName+1;
+After removing semicolons: const longVariableName=42;let anotherLongName=longVariableName+1;
+After fixing function spacing: const longVariableName=42;let anotherLongName=longVariableName+1;
+After removing newlines: const longVariableName=42;let anotherLongName=longVariableName+1;
+After removing bracket spaces: const longVariableName=42;let anotherLongName=longVariableName+1;
+After shortening variables: const a=42;let b=a+1;
+Final result: const a=42;let b=a+1;
+DEBUG: Minify function called
+Initial input: // Closure and scope test
+
+function createCounter(initialValue = 0) {
+    let count = initialValue;
+    
+    function increment(step = 1) {
+        count += step;
+        return count;
+    }
+    
+    function decrement(step = 1) {
+        count -= step;
+        return count;
+    }
+    
+    function reset() {
+        count = initialValue;
+        return count;
+    }
+    
+    return {
+        increment,
+        decrement,
+        reset,
+        get current() {
+            return count;
+        }
+    };
+}
+
+// Factory function with private state
+function createLogger(prefix) {
+    const logHistory = [];
+    const maxHistory = 100;
+    
+    function formatMessage(level, message) {
+        const timestamp = new Date().toISOString();
+        return `[${timestamp}] ${prefix} - ${level}: ${message}`;
+    }
+    
+    function addToHistory(entry) {
+        logHistory.push(entry);
+        if (logHistory.length > maxHistory) {
+            logHistory.shift();
+        }
+    }
+    
+    return {
+        log(message) {
+            const entry = formatMessage('INFO', message);
+            console.log(entry);
+            addToHistory(entry);
+        },
+        
+        error(message) {
+            const entry = formatMessage('ERROR', message);
+            console.error(entry);
+            addToHistory(entry);
+        },
+        
+        getHistory() {
+            return [...logHistory];
+        }
+    };
+}
+
+After license preservation: // Closure and scope test
+
+function createCounter(initialValue = 0) {
+    let count = initialValue;
+    
+    function increment(step = 1) {
+        count += step;
+        return count;
+    }
+    
+    function decrement(step = 1) {
+        count -= step;
+        return count;
+    }
+    
+    function reset() {
+        count = initialValue;
+        return count;
+    }
+    
+    return {
+        increment,
+        decrement,
+        reset,
+        get current() {
+            return count;
+        }
+    };
+}
+
+// Factory function with private state
+function createLogger(prefix) {
+    const logHistory = [];
+    const maxHistory = 100;
+    
+    function formatMessage(level, message) {
+        const timestamp = new Date().toISOString();
+        return `[${timestamp}] ${prefix} - ${level}: ${message}`;
+    }
+    
+    function addToHistory(entry) {
+        logHistory.push(entry);
+        if (logHistory.length > maxHistory) {
+            logHistory.shift();
+        }
+    }
+    
+    return {
+        log(message) {
+            const entry = formatMessage('INFO', message);
+            console.log(entry);
+            addToHistory(entry);
+        },
+        
+        error(message) {
+            const entry = formatMessage('ERROR', message);
+            console.error(entry);
+            addToHistory(entry);
+        },
+        
+        getHistory() {
+            return [...logHistory];
+        }
+    };
+}
+
+After removing single-line comments: 
+
+function createCounter(initialValue = 0) {
+    let count = initialValue;
+    
+    function increment(step = 1) {
+        count += step;
+        return count;
+    }
+    
+    function decrement(step = 1) {
+        count -= step;
+        return count;
+    }
+    
+    function reset() {
+        count = initialValue;
+        return count;
+    }
+    
+    return {
+        increment,
+        decrement,
+        reset,
+        get current() {
+            return count;
+        }
+    };
+}
+
+
+function createLogger(prefix) {
+    const logHistory = [];
+    const maxHistory = 100;
+    
+    function formatMessage(level, message) {
+        const timestamp = new Date().toISOString();
+        return `[${timestamp}] ${prefix} - ${level}: ${message}`;
+    }
+    
+    function addToHistory(entry) {
+        logHistory.push(entry);
+        if (logHistory.length > maxHistory) {
+            logHistory.shift();
+        }
+    }
+    
+    return {
+        log(message) {
+            const entry = formatMessage('INFO', message);
+            console.log(entry);
+            addToHistory(entry);
+        },
+        
+        error(message) {
+            const entry = formatMessage('ERROR', message);
+            console.error(entry);
+            addToHistory(entry);
+        },
+        
+        getHistory() {
+            return [...logHistory];
+        }
+    };
+}
+
+After removing multi-line comments: 
+
+function createCounter(initialValue = 0) {
+    let count = initialValue;
+    
+    function increment(step = 1) {
+        count += step;
+        return count;
+    }
+    
+    function decrement(step = 1) {
+        count -= step;
+        return count;
+    }
+    
+    function reset() {
+        count = initialValue;
+        return count;
+    }
+    
+    return {
+        increment,
+        decrement,
+        reset,
+        get current() {
+            return count;
+        }
+    };
+}
+
+
+function createLogger(prefix) {
+    const logHistory = [];
+    const maxHistory = 100;
+    
+    function formatMessage(level, message) {
+        const timestamp = new Date().toISOString();
+        return `[${timestamp}] ${prefix} - ${level}: ${message}`;
+    }
+    
+    function addToHistory(entry) {
+        logHistory.push(entry);
+        if (logHistory.length > maxHistory) {
+            logHistory.shift();
+        }
+    }
+    
+    return {
+        log(message) {
+            const entry = formatMessage('INFO', message);
+            console.log(entry);
+            addToHistory(entry);
+        },
+        
+        error(message) {
+            const entry = formatMessage('ERROR', message);
+            console.error(entry);
+            addToHistory(entry);
+        },
+        
+        getHistory() {
+            return [...logHistory];
+        }
+    };
+}
+
+After trimming whitespace: function createCounter(initialValue = 0) {
+    let count = initialValue;
+    
+    function increment(step = 1) {
+        count += step;
+        return count;
+    }
+    
+    function decrement(step = 1) {
+        count -= step;
+        return count;
+    }
+    
+    function reset() {
+        count = initialValue;
+        return count;
+    }
+    
+    return {
+        increment,
+        decrement,
+        reset,
+        get current() {
+            return count;
+        }
+    };
+}
+
+
+function createLogger(prefix) {
+    const logHistory = [];
+    const maxHistory = 100;
+    
+    function formatMessage(level, message) {
+        const timestamp = new Date().toISOString();
+        return `[${timestamp}] ${prefix} - ${level}: ${message}`;
+    }
+    
+    function addToHistory(entry) {
+        logHistory.push(entry);
+        if (logHistory.length > maxHistory) {
+            logHistory.shift();
+        }
+    }
+    
+    return {
+        log(message) {
+            const entry = formatMessage('INFO', message);
+            console.log(entry);
+            addToHistory(entry);
+        },
+        
+        error(message) {
+            const entry = formatMessage('ERROR', message);
+            console.error(entry);
+            addToHistory(entry);
+        },
+        
+        getHistory() {
+            return [...logHistory];
+        }
+    };
+}
+After replacing multiple spaces: function createCounter(initialValue = 0) { let count = initialValue; function increment(step = 1) { count += step; return count; } function decrement(step = 1) { count -= step; return count; } function reset() { count = initialValue; return count; } return { increment, decrement, reset, get current() { return count; } };
+} function createLogger(prefix) { const logHistory = []; const maxHistory = 100; function formatMessage(level, message) { const timestamp = new Date().toISOString(); return `[${timestamp}] ${prefix} - ${level}: ${message}`; } function addToHistory(entry) { logHistory.push(entry); if (logHistory.length > maxHistory) { logHistory.shift(); } } return { log(message) { const entry = formatMessage('INFO', message); console.log(entry); addToHistory(entry); }, error(message) { const entry = formatMessage('ERROR', message); console.error(entry); addToHistory(entry); }, getHistory() { return [...logHistory]; } };
+}
+After fixing operators: function createCounter(initialValue=0) { let count=initialValue;function increment(step=1) { count+=step;return count;} function decrement(step=1) { count-=step;return count;} function reset() { count=initialValue;return count;} return { increment,decrement,reset,get current() { return count;} };} function createLogger(prefix) { const logHistory=[];const maxHistory=100;function formatMessage(level,message) { const timestamp=new Date().toISOString();return `[${timestamp}] ${prefix}-${level}:${message}`;} function addToHistory(entry) { logHistory.push(entry);if (logHistory.length>maxHistory) { logHistory.shift();} } return { log(message) { const entry=formatMessage('INFO',message);console.log(entry);addToHistory(entry);},error(message) { const entry=formatMessage('ERROR',message);console.error(entry);addToHistory(entry);},getHistory() { return [...logHistory];} };}
+After removing semicolons: function createCounter(initialValue=0) { let count=initialValue;function increment(step=1) { count+=step;return count;} function decrement(step=1) { count-=step;return count;} function reset() { count=initialValue;return count;} return { increment,decrement,reset,get current() { return count;} };} function createLogger(prefix) { const logHistory=[];const maxHistory=100;function formatMessage(level,message) { const timestamp=new Date().toISOString();return `[${timestamp}] ${prefix}-${level}:${message}`;} function addToHistory(entry) { logHistory.push(entry);if (logHistory.length>maxHistory) { logHistory.shift();} } return { log(message) { const entry=formatMessage('INFO',message);console.log(entry);addToHistory(entry);},error(message) { const entry=formatMessage('ERROR',message);console.error(entry);addToHistory(entry);},getHistory() { return [...logHistory];} };}
+After fixing function spacing: function createCounter(initialValue=0) { let count=initialValue;function increment(step=1) { count+=step;return count;} function decrement(step=1) { count-=step;return count;} function reset() { count=initialValue;return count;} return { increment,decrement,reset,get current() { return count;} };} function createLogger(prefix) { const logHistory=[];const maxHistory=100;function formatMessage(level,message) { const timestamp=new Date().toISOString();return `[${timestamp}] ${prefix}-${level}:${message}`;} function addToHistory(entry) { logHistory.push(entry);if(logHistory.length>maxHistory) { logHistory.shift();} } return { log(message) { const entry=formatMessage('INFO',message);console.log(entry);addToHistory(entry);},error(message) { const entry=formatMessage('ERROR',message);console.error(entry);addToHistory(entry);},getHistory() { return [...logHistory];} };}
+After removing newlines: function createCounter(initialValue=0) { let count=initialValue;function increment(step=1) { count+=step;return count;} function decrement(step=1) { count-=step;return count;} function reset() { count=initialValue;return count;} return { increment,decrement,reset,get current() { return count;} };} function createLogger(prefix) { const logHistory=[];const maxHistory=100;function formatMessage(level,message) { const timestamp=new Date().toISOString();return `[${timestamp}] ${prefix}-${level}:${message}`;} function addToHistory(entry) { logHistory.push(entry);if(logHistory.length>maxHistory) { logHistory.shift();} } return { log(message) { const entry=formatMessage('INFO',message);console.log(entry);addToHistory(entry);},error(message) { const entry=formatMessage('ERROR',message);console.error(entry);addToHistory(entry);},getHistory() { return [...logHistory];} };}
+After removing bracket spaces: function createCounter(initialValue=0){let count=initialValue;function increment(step=1){count+=step;return count;}function decrement(step=1){count-=step;return count;}function reset(){count=initialValue;return count;}return{increment,decrement,reset,get current(){return count;}};}function createLogger(prefix){const logHistory=[];const maxHistory=100;function formatMessage(level,message){const timestamp=new Date().toISOString();return `[${timestamp}]${prefix}-${level}:${message}`;}function addToHistory(entry){logHistory.push(entry);if(logHistory.length>maxHistory){logHistory.shift();}}return{log(message){const entry=formatMessage('INFO',message);console.log(entry);addToHistory(entry);},error(message){const entry=formatMessage('ERROR',message);console.error(entry);addToHistory(entry);},getHistory(){return[...logHistory];}};}
+Final result: function createCounter(initialValue=0){let count=initialValue;function increment(step=1){count+=step;return count;}function decrement(step=1){count-=step;return count;}function reset(){count=initialValue;return count;}return{increment,decrement,reset,get current(){return count;}};}function createLogger(prefix){const logHistory=[];const maxHistory=100;function formatMessage(level,message){const timestamp=new Date().toISOString();return `[${timestamp}]${prefix}-${level}:${message}`;}function addToHistory(entry){logHistory.push(entry);if(logHistory.length>maxHistory){logHistory.shift();}}return{log(message){const entry=formatMessage('INFO',message);console.log(entry);addToHistory(entry);},error(message){const entry=formatMessage('ERROR',message);console.error(entry);addToHistory(entry);},getHistory(){return[...logHistory];}};}
+DEBUG: Minify function called
+Initial input: /*!
+ * Test Library v1.0.0
+ * (c) 2024 Test Author
+ * Released under the MIT License
+ */
+
+/*! Important runtime warning - Do not remove */
+const IMPORTANT_CONSTANT = 42;
+
+// Regular comment that should be removed
+function someFunction() {
+    /* This comment should be removed */
+    return IMPORTANT_CONSTANT;
+}
+
+/*!
+ * This is a multi-line license comment
+ * that should be preserved
+ * @license
+ */
+class ImportantClass {
+    // This regular comment should be removed
+    constructor() {
+        /*! Runtime critical comment */
+        this.value = IMPORTANT_CONSTANT;
+    }
+}
+
+/* This is a normal multi-line comment
+   that should be removed during
+   minification */
+const result = someFunction();
+
+After license preservation: /*!
+ * Test Library v1.0.0
+ * (c) 2024 Test Author
+ * Released under the MIT License
+ */
+
+/*! Important runtime warning - Do not remove */
+const IMPORTANT_CONSTANT = 42;
+
+// Regular comment that should be removed
+function someFunction() {
+    /* This comment should be removed */
+    return IMPORTANT_CONSTANT;
+}
+
+/*!
+ * This is a multi-line license comment
+ * that should be preserved
+ * @license
+ */
+class ImportantClass {
+    // This regular comment should be removed
+    constructor() {
+        /*! Runtime critical comment */
+        this.value = IMPORTANT_CONSTANT;
+    }
+}
+
+/* This is a normal multi-line comment
+   that should be removed during
+   minification */
+const result = someFunction();
+
+After removing single-line comments: /*!
+ * Test Library v1.0.0
+ * (c) 2024 Test Author
+ * Released under the MIT License
+ */
+
+/*! Important runtime warning - Do not remove */
+const IMPORTANT_CONSTANT = 42;
+
+
+function someFunction() {
+    /* This comment should be removed */
+    return IMPORTANT_CONSTANT;
+}
+
+/*!
+ * This is a multi-line license comment
+ * that should be preserved
+ * @license
+ */
+class ImportantClass {
+    
+    constructor() {
+        /*! Runtime critical comment */
+        this.value = IMPORTANT_CONSTANT;
+    }
+}
+
+/* This is a normal multi-line comment
+   that should be removed during
+   minification */
+const result = someFunction();
+
+After removing multi-line comments: 
+
+
+const IMPORTANT_CONSTANT = 42;
+
+
+function someFunction() {
+    
+    return IMPORTANT_CONSTANT;
+}
+
+
+class ImportantClass {
+    
+    constructor() {
+        
+        this.value = IMPORTANT_CONSTANT;
+    }
+}
+
+
+const result = someFunction();
+
+After trimming whitespace: const IMPORTANT_CONSTANT = 42;
+
+
+function someFunction() {
+    
+    return IMPORTANT_CONSTANT;
+}
+
+
+class ImportantClass {
+    
+    constructor() {
+        
+        this.value = IMPORTANT_CONSTANT;
+    }
+}
+
+
+const result = someFunction();
+After replacing multiple spaces: const IMPORTANT_CONSTANT = 42; function someFunction() { return IMPORTANT_CONSTANT;
+} class ImportantClass { constructor() { this.value = IMPORTANT_CONSTANT; }
+} const result = someFunction();
+After fixing operators: const IMPORTANT_CONSTANT=42;function someFunction() { return IMPORTANT_CONSTANT;} class ImportantClass { constructor() { this.value=IMPORTANT_CONSTANT;}
+} const result=someFunction();
+After removing semicolons: const IMPORTANT_CONSTANT=42;function someFunction() { return IMPORTANT_CONSTANT;} class ImportantClass { constructor() { this.value=IMPORTANT_CONSTANT;}
+} const result=someFunction();
+After fixing function spacing: const IMPORTANT_CONSTANT=42;function someFunction() { return IMPORTANT_CONSTANT;} class ImportantClass { constructor() { this.value=IMPORTANT_CONSTANT;}
+} const result=someFunction();
+After removing newlines: const IMPORTANT_CONSTANT=42;function someFunction() { return IMPORTANT_CONSTANT;} class ImportantClass { constructor() { this.value=IMPORTANT_CONSTANT;}} const result=someFunction();
+After removing bracket spaces: const IMPORTANT_CONSTANT=42;function someFunction(){return IMPORTANT_CONSTANT;}class ImportantClass{constructor(){this.value=IMPORTANT_CONSTANT;}}const result=someFunction();
+Final result: const IMPORTANT_CONSTANT=42;function someFunction(){return IMPORTANT_CONSTANT;}class ImportantClass{constructor(){this.value=IMPORTANT_CONSTANT;}}const result=someFunction();
+DEBUG: Minify function called
+Initial input: /*!
+ * Complex JavaScript Test File
+ * Copyright (c) 2024
+ * Licensed under MIT
+ */
+
+// Utility function for calculation
+function calculateComplex(x, y, z) {
+    const multiplier = 2.5;  // Default multiplier
+    let result = 0;
+
+    /* This is a multi-line comment
+       that should be removed during minification
+       but contains important context */
+
+    // Calculate the result
+    if (x > y) {
+        result = (x + y) * multiplier;
+    } else {
+        result = (y - x) * multiplier + z;
+    }
+
+    return result;
+}
+
+// Class definition for data processing
+class DataProcessor {
+    constructor(initialValue) {
+        this.value = initialValue;
+        this.history = [];
+    }
+
+    // Process the data with given parameters
+    processData(inputData) {
+        const processedValue = calculateComplex(
+            this.value,
+            inputData,
+            10
+        );
+        
+        this.history.push({
+            input: inputData,
+            output: processedValue,
+            timestamp: new Date()
+        });
+
+        return processedValue;
+    }
+
+    // Get processing history
+    getHistory() {
+        return this.history.map(item => {
+            return {
+                input: item.input,
+                output: item.output,
+                time: item.timestamp.toISOString()
+            };
+        });
+    }
+}
+
+After license preservation: /*!
+ * Complex JavaScript Test File
+ * Copyright (c) 2024
+ * Licensed under MIT
+ */
+
+// Utility function for calculation
+function calculateComplex(x, y, z) {
+    const multiplier = 2.5;  // Default multiplier
+    let result = 0;
+
+    /* This is a multi-line comment
+       that should be removed during minification
+       but contains important context */
+
+    // Calculate the result
+    if (x > y) {
+        result = (x + y) * multiplier;
+    } else {
+        result = (y - x) * multiplier + z;
+    }
+
+    return result;
+}
+
+// Class definition for data processing
+class DataProcessor {
+    constructor(initialValue) {
+        this.value = initialValue;
+        this.history = [];
+    }
+
+    // Process the data with given parameters
+    processData(inputData) {
+        const processedValue = calculateComplex(
+            this.value,
+            inputData,
+            10
+        );
+        
+        this.history.push({
+            input: inputData,
+            output: processedValue,
+            timestamp: new Date()
+        });
+
+        return processedValue;
+    }
+
+    // Get processing history
+    getHistory() {
+        return this.history.map(item => {
+            return {
+                input: item.input,
+                output: item.output,
+                time: item.timestamp.toISOString()
+            };
+        });
+    }
+}
+
+After removing single-line comments: /*!
+ * Complex JavaScript Test File
+ * Copyright (c) 2024
+ * Licensed under MIT
+ */
+
+
+function calculateComplex(x, y, z) {
+    const multiplier = 2.5;  
+    let result = 0;
+
+    /* This is a multi-line comment
+       that should be removed during minification
+       but contains important context */
+
+    
+    if (x > y) {
+        result = (x + y) * multiplier;
+    } else {
+        result = (y - x) * multiplier + z;
+    }
+
+    return result;
+}
+
+
+class DataProcessor {
+    constructor(initialValue) {
+        this.value = initialValue;
+        this.history = [];
+    }
+
+    
+    processData(inputData) {
+        const processedValue = calculateComplex(
+            this.value,
+            inputData,
+            10
+        );
+        
+        this.history.push({
+            input: inputData,
+            output: processedValue,
+            timestamp: new Date()
+        });
+
+        return processedValue;
+    }
+
+    
+    getHistory() {
+        return this.history.map(item => {
+            return {
+                input: item.input,
+                output: item.output,
+                time: item.timestamp.toISOString()
+            };
+        });
+    }
+}
+
+After removing multi-line comments: 
+
+
+function calculateComplex(x, y, z) {
+    const multiplier = 2.5;  
+    let result = 0;
+
+    
+
+    
+    if (x > y) {
+        result = (x + y) * multiplier;
+    } else {
+        result = (y - x) * multiplier + z;
+    }
+
+    return result;
+}
+
+
+class DataProcessor {
+    constructor(initialValue) {
+        this.value = initialValue;
+        this.history = [];
+    }
+
+    
+    processData(inputData) {
+        const processedValue = calculateComplex(
+            this.value,
+            inputData,
+            10
+        );
+        
+        this.history.push({
+            input: inputData,
+            output: processedValue,
+            timestamp: new Date()
+        });
+
+        return processedValue;
+    }
+
+    
+    getHistory() {
+        return this.history.map(item => {
+            return {
+                input: item.input,
+                output: item.output,
+                time: item.timestamp.toISOString()
+            };
+        });
+    }
+}
+
+After trimming whitespace: function calculateComplex(x, y, z) {
+    const multiplier = 2.5;  
+    let result = 0;
+
+    
+
+    
+    if (x > y) {
+        result = (x + y) * multiplier;
+    } else {
+        result = (y - x) * multiplier + z;
+    }
+
+    return result;
+}
+
+
+class DataProcessor {
+    constructor(initialValue) {
+        this.value = initialValue;
+        this.history = [];
+    }
+
+    
+    processData(inputData) {
+        const processedValue = calculateComplex(
+            this.value,
+            inputData,
+            10
+        );
+        
+        this.history.push({
+            input: inputData,
+            output: processedValue,
+            timestamp: new Date()
+        });
+
+        return processedValue;
+    }
+
+    
+    getHistory() {
+        return this.history.map(item => {
+            return {
+                input: item.input,
+                output: item.output,
+                time: item.timestamp.toISOString()
+            };
+        });
+    }
+}
+After replacing multiple spaces: function calculateComplex(x, y, z) { const multiplier = 2.5; let result = 0; if (x > y) { result = (x + y) * multiplier; } else { result = (y - x) * multiplier + z; } return result;
+} class DataProcessor { constructor(initialValue) { this.value = initialValue; this.history = []; } processData(inputData) { const processedValue = calculateComplex( this.value, inputData, 10 ); this.history.push({ input: inputData, output: processedValue, timestamp: new Date() }); return processedValue; } getHistory() { return this.history.map(item => { return { input: item.input, output: item.output, time: item.timestamp.toISOString() }; }); }
+}
+After fixing operators: function calculateComplex(x,y,z) { const multiplier=2.5;let result=0;if (x>y) { result=(x+y)*multiplier;} else { result=(y-x)*multiplier+z;} return result;} class DataProcessor { constructor(initialValue) { this.value=initialValue;this.history=[];} processData(inputData) { const processedValue=calculateComplex( this.value,inputData,10 );this.history.push({ input:inputData,output:processedValue,timestamp:new Date() });return processedValue;} getHistory() { return this.history.map(item=>{ return { input:item.input,output:item.output,time:item.timestamp.toISOString() };});}
+}
+After removing semicolons: function calculateComplex(x,y,z) { const multiplier=2.5;let result=0;if (x>y) { result=(x+y)*multiplier;} else { result=(y-x)*multiplier+z;} return result;} class DataProcessor { constructor(initialValue) { this.value=initialValue;this.history=[];} processData(inputData) { const processedValue=calculateComplex( this.value,inputData,10 );this.history.push({ input:inputData,output:processedValue,timestamp:new Date() });return processedValue;} getHistory() { return this.history.map(item=>{ return { input:item.input,output:item.output,time:item.timestamp.toISOString() };});}
+}
+After fixing function spacing: function calculateComplex(x,y,z) { const multiplier=2.5;let result=0;if(x>y) { result=(x+y)*multiplier;} else { result=(y-x)*multiplier+z;} return result;} class DataProcessor { constructor(initialValue) { this.value=initialValue;this.history=[];} processData(inputData) { const processedValue=calculateComplex( this.value,inputData,10 );this.history.push({ input:inputData,output:processedValue,timestamp:new Date() });return processedValue;} getHistory() { return this.history.map(item=>{ return { input:item.input,output:item.output,time:item.timestamp.toISOString() };});}
+}
+After removing newlines: function calculateComplex(x,y,z) { const multiplier=2.5;let result=0;if(x>y) { result=(x+y)*multiplier;} else { result=(y-x)*multiplier+z;} return result;} class DataProcessor { constructor(initialValue) { this.value=initialValue;this.history=[];} processData(inputData) { const processedValue=calculateComplex( this.value,inputData,10 );this.history.push({ input:inputData,output:processedValue,timestamp:new Date() });return processedValue;} getHistory() { return this.history.map(item=>{ return { input:item.input,output:item.output,time:item.timestamp.toISOString() };});}}
+After removing bracket spaces: function calculateComplex(x,y,z){const multiplier=2.5;let result=0;if(x>y){result=(x+y)*multiplier;}else{result=(y-x)*multiplier+z;}return result;}class DataProcessor{constructor(initialValue){this.value=initialValue;this.history=[];}processData(inputData){const processedValue=calculateComplex(this.value,inputData,10);this.history.push({input:inputData,output:processedValue,timestamp:new Date()});return processedValue;}getHistory(){return this.history.map(item=>{return{input:item.input,output:item.output,time:item.timestamp.toISOString()};});}}
+Final result: function calculateComplex(x,y,z){const multiplier=2.5;let result=0;if(x>y){result=(x+y)*multiplier;}else{result=(y-x)*multiplier+z;}return result;}class DataProcessor{constructor(initialValue){this.value=initialValue;this.history=[];}processData(inputData){const processedValue=calculateComplex(this.value,inputData,10);this.history.push({input:inputData,output:processedValue,timestamp:new Date()});return processedValue;}getHistory(){return this.history.map(item=>{return{input:item.input,output:item.output,time:item.timestamp.toISOString()};});}}
+DEBUG: Minify function called
+Initial input: // Modern JavaScript Features Test
+
+// Arrow functions and template literals
+const greet = (name) => {
+    const time = new Date().getHours();
+    return `Good ${time < 12 ? 'morning' : 'evening'}, ${name}!`;
+};
+
+// Destructuring and spread operator
+const config = {
+    theme: 'dark',
+    language: 'en',
+    notifications: true
+};
+
+const { theme, ...rest } = config;
+const fullConfig = {
+    ...rest,
+    theme: 'light',
+    version: '2.0'
+};
+
+// Async/await and promises
+async function fetchUserData(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Error fetching user: ${error.message}`);
+        return null;
+    }
+}
+
+// Class with private fields and methods
+class UserManager {
+    #users = new Map();
+    #lastId = 0;
+
+    constructor(initialUsers = []) {
+        initialUsers.forEach(user => this.#addUser(user));
+    }
+
+    #addUser(userData) {
+        this.#lastId++;
+        this.#users.set(this.#lastId, userData);
+        return this.#lastId;
+    }
+
+    addNewUser(userData) {
+        return this.#addUser(userData);
+    }
+
+    get userCount() {
+        return this.#users.size;
+    }
+}
+
+After license preservation: // Modern JavaScript Features Test
+
+// Arrow functions and template literals
+const greet = (name) => {
+    const time = new Date().getHours();
+    return `Good ${time < 12 ? 'morning' : 'evening'}, ${name}!`;
+};
+
+// Destructuring and spread operator
+const config = {
+    theme: 'dark',
+    language: 'en',
+    notifications: true
+};
+
+const { theme, ...rest } = config;
+const fullConfig = {
+    ...rest,
+    theme: 'light',
+    version: '2.0'
+};
+
+// Async/await and promises
+async function fetchUserData(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Error fetching user: ${error.message}`);
+        return null;
+    }
+}
+
+// Class with private fields and methods
+class UserManager {
+    #users = new Map();
+    #lastId = 0;
+
+    constructor(initialUsers = []) {
+        initialUsers.forEach(user => this.#addUser(user));
+    }
+
+    #addUser(userData) {
+        this.#lastId++;
+        this.#users.set(this.#lastId, userData);
+        return this.#lastId;
+    }
+
+    addNewUser(userData) {
+        return this.#addUser(userData);
+    }
+
+    get userCount() {
+        return this.#users.size;
+    }
+}
+
+After removing single-line comments: 
+
+
+const greet = (name) => {
+    const time = new Date().getHours();
+    return `Good ${time < 12 ? 'morning' : 'evening'}, ${name}!`;
+};
+
+
+const config = {
+    theme: 'dark',
+    language: 'en',
+    notifications: true
+};
+
+const { theme, ...rest } = config;
+const fullConfig = {
+    ...rest,
+    theme: 'light',
+    version: '2.0'
+};
+
+
+async function fetchUserData(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Error fetching user: ${error.message}`);
+        return null;
+    }
+}
+
+
+class UserManager {
+    #users = new Map();
+    #lastId = 0;
+
+    constructor(initialUsers = []) {
+        initialUsers.forEach(user => this.#addUser(user));
+    }
+
+    #addUser(userData) {
+        this.#lastId++;
+        this.#users.set(this.#lastId, userData);
+        return this.#lastId;
+    }
+
+    addNewUser(userData) {
+        return this.#addUser(userData);
+    }
+
+    get userCount() {
+        return this.#users.size;
+    }
+}
+
+After removing multi-line comments: 
+
+
+const greet = (name) => {
+    const time = new Date().getHours();
+    return `Good ${time < 12 ? 'morning' : 'evening'}, ${name}!`;
+};
+
+
+const config = {
+    theme: 'dark',
+    language: 'en',
+    notifications: true
+};
+
+const { theme, ...rest } = config;
+const fullConfig = {
+    ...rest,
+    theme: 'light',
+    version: '2.0'
+};
+
+
+async function fetchUserData(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Error fetching user: ${error.message}`);
+        return null;
+    }
+}
+
+
+class UserManager {
+    #users = new Map();
+    #lastId = 0;
+
+    constructor(initialUsers = []) {
+        initialUsers.forEach(user => this.#addUser(user));
+    }
+
+    #addUser(userData) {
+        this.#lastId++;
+        this.#users.set(this.#lastId, userData);
+        return this.#lastId;
+    }
+
+    addNewUser(userData) {
+        return this.#addUser(userData);
+    }
+
+    get userCount() {
+        return this.#users.size;
+    }
+}
+
+After trimming whitespace: const greet = (name) => {
+    const time = new Date().getHours();
+    return `Good ${time < 12 ? 'morning' : 'evening'}, ${name}!`;
+};
+
+
+const config = {
+    theme: 'dark',
+    language: 'en',
+    notifications: true
+};
+
+const { theme, ...rest } = config;
+const fullConfig = {
+    ...rest,
+    theme: 'light',
+    version: '2.0'
+};
+
+
+async function fetchUserData(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Error fetching user: ${error.message}`);
+        return null;
+    }
+}
+
+
+class UserManager {
+    #users = new Map();
+    #lastId = 0;
+
+    constructor(initialUsers = []) {
+        initialUsers.forEach(user => this.#addUser(user));
+    }
+
+    #addUser(userData) {
+        this.#lastId++;
+        this.#users.set(this.#lastId, userData);
+        return this.#lastId;
+    }
+
+    addNewUser(userData) {
+        return this.#addUser(userData);
+    }
+
+    get userCount() {
+        return this.#users.size;
+    }
+}
+After replacing multiple spaces: const greet = (name) => { const time = new Date().getHours(); return `Good ${time < 12 ? 'morning' : 'evening'}, ${name}!`;
+}; const config = { theme: 'dark', language: 'en', notifications: true
+}; const { theme, ...rest } = config;
+const fullConfig = { ...rest, theme: 'light', version: '2.0'
+}; async function fetchUserData(userId) { try { const response = await fetch(`/api/users/${userId}`); const data = await response.json(); return data; } catch (error) { console.error(`Error fetching user: ${error.message}`); return null; }
+} class UserManager { #users = new Map(); #lastId = 0; constructor(initialUsers = []) { initialUsers.forEach(user => this.#addUser(user)); } #addUser(userData) { this.#lastId++; this.#users.set(this.#lastId, userData); return this.#lastId; } addNewUser(userData) { return this.#addUser(userData); } get userCount() { return this.#users.size; }
+}
+After fixing operators: const greet=(name)=>{ const time=new Date().getHours();return `Good ${time<12?'morning':'evening'},${name}!`;};const config={ theme:'dark',language:'en',notifications:true
+};const { theme,...rest }=config;const fullConfig={ ...rest,theme:'light',version:'2.0'
+};async function fetchUserData(userId) { try { const response=await fetch(`/api/users/${userId}`);const data=await response.json();return data;} catch (error) { console.error(`Error fetching user:${error.message}`);return null;}
+} class UserManager { #users=new Map();#lastId=0;constructor(initialUsers=[]) { initialUsers.forEach(user=>this.#addUser(user));} #addUser(userData) { this.#lastId++;this.#users.set(this.#lastId,userData);return this.#lastId;} addNewUser(userData) { return this.#addUser(userData);} get userCount() { return this.#users.size;}
+}
+After removing semicolons: const greet=(name)=>{ const time=new Date().getHours();return `Good ${time<12?'morning':'evening'},${name}!`;};const config={ theme:'dark',language:'en',notifications:true
+};const { theme,...rest }=config;const fullConfig={ ...rest,theme:'light',version:'2.0'
+};async function fetchUserData(userId) { try { const response=await fetch(`/api/users/${userId}`);const data=await response.json();return data;} catch (error) { console.error(`Error fetching user:${error.message}`);return null;}
+} class UserManager { #users=new Map();#lastId=0;constructor(initialUsers=[]) { initialUsers.forEach(user=>this.#addUser(user));} #addUser(userData) { this.#lastId++;this.#users.set(this.#lastId,userData);return this.#lastId;} addNewUser(userData) { return this.#addUser(userData);} get userCount() { return this.#users.size;}
+}
+After fixing function spacing: const greet=(name)=>{ const time=new Date().getHours();return `Good ${time<12?'morning':'evening'},${name}!`;};const config={ theme:'dark',language:'en',notifications:true
+};const { theme,...rest }=config;const fullConfig={ ...rest,theme:'light',version:'2.0'
+};async function fetchUserData(userId) { try { const response=await fetch(`/api/users/${userId}`);const data=await response.json();return data;} catch(error) { console.error(`Error fetching user:${error.message}`);return null;}
+} class UserManager { #users=new Map();#lastId=0;constructor(initialUsers=[]) { initialUsers.forEach(user=>this.#addUser(user));} #addUser(userData) { this.#lastId++;this.#users.set(this.#lastId,userData);return this.#lastId;} addNewUser(userData) { return this.#addUser(userData);} get userCount() { return this.#users.size;}
+}
+After removing newlines: const greet=(name)=>{ const time=new Date().getHours();return `Good ${time<12?'morning':'evening'},${name}!`;};const config={ theme:'dark',language:'en',notifications:true};const { theme,...rest }=config;const fullConfig={ ...rest,theme:'light',version:'2.0'};async function fetchUserData(userId) { try { const response=await fetch(`/api/users/${userId}`);const data=await response.json();return data;} catch(error) { console.error(`Error fetching user:${error.message}`);return null;}} class UserManager { #users=new Map();#lastId=0;constructor(initialUsers=[]) { initialUsers.forEach(user=>this.#addUser(user));} #addUser(userData) { this.#lastId++;this.#users.set(this.#lastId,userData);return this.#lastId;} addNewUser(userData) { return this.#addUser(userData);} get userCount() { return this.#users.size;}}
+After removing bracket spaces: const greet=(name)=>{const time=new Date().getHours();return `Good ${time<12?'morning':'evening'},${name}!`;};const config={theme:'dark',language:'en',notifications:true};const{theme,...rest}=config;const fullConfig={...rest,theme:'light',version:'2.0'};async function fetchUserData(userId){try{const response=await fetch(`/api/users/${userId}`);const data=await response.json();return data;}catch(error){console.error(`Error fetching user:${error.message}`);return null;}}class UserManager{#users=new Map();#lastId=0;constructor(initialUsers=[]){initialUsers.forEach(user=>this.#addUser(user));}#addUser(userData){this.#lastId++;this.#users.set(this.#lastId,userData);return this.#lastId;}addNewUser(userData){return this.#addUser(userData);}get userCount(){return this.#users.size;}}
+Final result: const greet=(name)=>{const time=new Date().getHours();return `Good ${time<12?'morning':'evening'},${name}!`;};const config={theme:'dark',language:'en',notifications:true};const{theme,...rest}=config;const fullConfig={...rest,theme:'light',version:'2.0'};async function fetchUserData(userId){try{const response=await fetch(`/api/users/${userId}`);const data=await response.json();return data;}catch(error){console.error(`Error fetching user:${error.message}`);return null;}}class UserManager{#users=new Map();#lastId=0;constructor(initialUsers=[]){initialUsers.forEach(user=>this.#addUser(user));}#addUser(userData){this.#lastId++;this.#users.set(this.#lastId,userData);return this.#lastId;}addNewUser(userData){return this.#addUser(userData);}get userCount(){return this.#users.size;}}
+DEBUG: Minify function called
+Initial input: // Regular expressions and string manipulation test
+
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const URL_REGEX = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+
+function validateEmail(email) {
+    return EMAIL_REGEX.test(email.trim());
+}
+
+function extractDomain(url) {
+    const match = URL_REGEX.exec(url);
+    return match ? match[2] : null;
+}
+
+// String manipulation with special characters
+const escapeHtml = (unsafe) => {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// Complex string formatting
+function formatPhoneNumber(number) {
+    const cleaned = ('' + number).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return null;
+}
+
+After license preservation: // Regular expressions and string manipulation test
+
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const URL_REGEX = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+
+function validateEmail(email) {
+    return EMAIL_REGEX.test(email.trim());
+}
+
+function extractDomain(url) {
+    const match = URL_REGEX.exec(url);
+    return match ? match[2] : null;
+}
+
+// String manipulation with special characters
+const escapeHtml = (unsafe) => {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// Complex string formatting
+function formatPhoneNumber(number) {
+    const cleaned = ('' + number).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return null;
+}
+
+After removing single-line comments: 
+
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const URL_REGEX = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+
+function validateEmail(email) {
+    return EMAIL_REGEX.test(email.trim());
+}
+
+function extractDomain(url) {
+    const match = URL_REGEX.exec(url);
+    return match ? match[2] : null;
+}
+
+
+const escapeHtml = (unsafe) => {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function formatPhoneNumber(number) {
+    const cleaned = ('' + number).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return null;
+}
+
+After removing multi-line comments: 
+
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const URL_REGEX = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+
+function validateEmail(email) {
+    return EMAIL_REGEX.test(email.trim());
+}
+
+function extractDomain(url) {
+    const match = URL_REGEX.exec(url);
+    return match ? match[2] : null;
+}
+
+
+const escapeHtml = (unsafe) => {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function formatPhoneNumber(number) {
+    const cleaned = ('' + number).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return null;
+}
+
+After trimming whitespace: const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const URL_REGEX = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+
+function validateEmail(email) {
+    return EMAIL_REGEX.test(email.trim());
+}
+
+function extractDomain(url) {
+    const match = URL_REGEX.exec(url);
+    return match ? match[2] : null;
+}
+
+
+const escapeHtml = (unsafe) => {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function formatPhoneNumber(number) {
+    const cleaned = ('' + number).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return null;
+}
+After replacing multiple spaces: const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const URL_REGEX = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/; function validateEmail(email) { return EMAIL_REGEX.test(email.trim());
+} function extractDomain(url) { const match = URL_REGEX.exec(url); return match ? match[2] : null;
+} const escapeHtml = (unsafe) => { return unsafe .replace(/&/g, "&amp;") .replace(/</g, "&lt;") .replace(/>/g, "&gt;") .replace(/"/g, "&quot;") .replace(/'/g, "&#039;");
+} function formatPhoneNumber(number) { const cleaned = ('' + number).replace(/\D/g, ''); const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/); if (match) { return '(' + match[1] + ') ' + match[2] + '-' + match[3]; } return null;
+}
+After fixing operators: const EMAIL_REGEX=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;const URL_REGEX=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;function validateEmail(email) { return EMAIL_REGEX.test(email.trim());} function extractDomain(url) { const match=URL_REGEX.exec(url);return match?match[2]:null;} const escapeHtml=(unsafe)=>{ return unsafe .replace(/&/g,"&amp;") .replace(/</g,"&lt;") .replace(/>/g,"&gt;") .replace(/"/g,"&quot;") .replace(/'/g,"&#039;");} function formatPhoneNumber(number) { const cleaned=(''+number).replace(/\D/g,'');const match=cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);if (match) { return '('+match[1]+') '+match[2]+'-'+match[3];} return null;}
+After removing semicolons: const EMAIL_REGEX=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;const URL_REGEX=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;function validateEmail(email) { return EMAIL_REGEX.test(email.trim());} function extractDomain(url) { const match=URL_REGEX.exec(url);return match?match[2]:null;} const escapeHtml=(unsafe)=>{ return unsafe .replace(/&/g,"&amp;") .replace(/</g,"&lt;") .replace(/>/g,"&gt;") .replace(/"/g,"&quot;") .replace(/'/g,"&#039;");} function formatPhoneNumber(number) { const cleaned=(''+number).replace(/\D/g,'');const match=cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);if (match) { return '('+match[1]+') '+match[2]+'-'+match[3];} return null;}
+After fixing function spacing: const EMAIL_REGEX=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;const URL_REGEX=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;function validateEmail(email) { return EMAIL_REGEX.test(email.trim());} function extractDomain(url) { const match=URL_REGEX.exec(url);return match?match[2]:null;} const escapeHtml=(unsafe)=>{ return unsafe .replace(/&/g,"&amp;") .replace(/</g,"&lt;") .replace(/>/g,"&gt;") .replace(/"/g,"&quot;") .replace(/'/g,"&#039;");} function formatPhoneNumber(number) { const cleaned=(''+number).replace(/\D/g,'');const match=cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);if(match) { return '('+match[1]+') '+match[2]+'-'+match[3];} return null;}
+After removing newlines: const EMAIL_REGEX=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;const URL_REGEX=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;function validateEmail(email) { return EMAIL_REGEX.test(email.trim());} function extractDomain(url) { const match=URL_REGEX.exec(url);return match?match[2]:null;} const escapeHtml=(unsafe)=>{ return unsafe .replace(/&/g,"&amp;") .replace(/</g,"&lt;") .replace(/>/g,"&gt;") .replace(/"/g,"&quot;") .replace(/'/g,"&#039;");} function formatPhoneNumber(number) { const cleaned=(''+number).replace(/\D/g,'');const match=cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);if(match) { return '('+match[1]+') '+match[2]+'-'+match[3];} return null;}
+After removing bracket spaces: const EMAIL_REGEX=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;const URL_REGEX=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;function validateEmail(email){return EMAIL_REGEX.test(email.trim());}function extractDomain(url){const match=URL_REGEX.exec(url);return match?match[2]:null;}const escapeHtml=(unsafe)=>{return unsafe .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}function formatPhoneNumber(number){const cleaned=(''+number).replace(/\D/g,'');const match=cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);if(match){return '('+match[1]+')'+match[2]+'-'+match[3];}return null;}
+Final result: const EMAIL_REGEX=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;const URL_REGEX=/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;function validateEmail(email){return EMAIL_REGEX.test(email.trim());}function extractDomain(url){const match=URL_REGEX.exec(url);return match?match[2]:null;}const escapeHtml=(unsafe)=>{return unsafe .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}function formatPhoneNumber(number){const cleaned=(''+number).replace(/\D/g,'');const match=cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);if(match){return '('+match[1]+')'+match[2]+'-'+match[3];}return null;}
+DEBUG: Minify function called
+Initial input: // Simple utility functions
+
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+const multiply = function(a, b) {
+    return a * b;
+}
+
+// Export functions
+module.exports = {
+    add,
+    subtract,
+    multiply
+};
+
+After license preservation: // Simple utility functions
+
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+const multiply = function(a, b) {
+    return a * b;
+}
+
+// Export functions
+module.exports = {
+    add,
+    subtract,
+    multiply
+};
+
+After removing single-line comments: 
+
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+const multiply = function(a, b) {
+    return a * b;
+}
+
+
+module.exports = {
+    add,
+    subtract,
+    multiply
+};
+
+After removing multi-line comments: 
+
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+const multiply = function(a, b) {
+    return a * b;
+}
+
+
+module.exports = {
+    add,
+    subtract,
+    multiply
+};
+
+After trimming whitespace: function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+const multiply = function(a, b) {
+    return a * b;
+}
+
+
+module.exports = {
+    add,
+    subtract,
+    multiply
+};
+After replacing multiple spaces: function add(a, b) { return a + b;
+} function subtract(a, b) { return a - b;
+} const multiply = function(a, b) { return a * b;
+} module.exports = { add, subtract, multiply
+};
+After fixing operators: function add(a,b) { return a+b;} function subtract(a,b) { return a-b;} const multiply=function(a,b) { return a*b;} module.exports={ add,subtract,multiply
+};
+After removing semicolons: function add(a,b) { return a+b;} function subtract(a,b) { return a-b;} const multiply=function(a,b) { return a*b;} module.exports={ add,subtract,multiply
+};
+After fixing function spacing: function add(a,b) { return a+b;} function subtract(a,b) { return a-b;} const multiply=function(a,b) { return a*b;} module.exports={ add,subtract,multiply
+};
+After removing newlines: function add(a,b) { return a+b;} function subtract(a,b) { return a-b;} const multiply=function(a,b) { return a*b;} module.exports={ add,subtract,multiply};
+After removing bracket spaces: function add(a,b){return a+b;}function subtract(a,b){return a-b;}const multiply=function(a,b){return a*b;}module.exports={add,subtract,multiply};
+Final result: function add(a,b){return a+b;}function subtract(a,b){return a-b;}const multiply=function(a,b){return a*b;}module.exports={add,subtract,multiply};
+DEBUG: Minify function called
+Initial input: 
+After license preservation: 
+After removing single-line comments: 
+After removing multi-line comments: 
+After trimming whitespace: 
+After replacing multiple spaces: 
+After fixing operators: 
+After removing semicolons: 
+After fixing function spacing: 
+After removing newlines: 
+After removing bracket spaces: 
+Final result: 
+DEBUG: Minify function called
+Initial input: // Just a comment
+/* Another comment */
+After license preservation: // Just a comment
+/* Another comment */
+After removing single-line comments: 
+/* Another comment */
+After removing multi-line comments: 
+
+After trimming whitespace: 
+After replacing multiple spaces: 
+After fixing operators: 
+After removing semicolons: 
+After fixing function spacing: 
+After removing newlines: 
+After removing bracket spaces: 
+Final result: 
+DEBUG: Minify function called
+Initial input: const str = "This is a \"quoted\" string"
+After license preservation: const str = "This is a \"quoted\" string"
+After removing single-line comments: const str = "This is a \"quoted\" string"
+After removing multi-line comments: const str = "This is a \"quoted\" string"
+After trimming whitespace: const str = "This is a \"quoted\" string"
+After replacing multiple spaces: const str = "This is a \"quoted\" string"
+After fixing operators: const str="This is a \"quoted\" string"
+After removing semicolons: const str="This is a \"quoted\" string"
+After fixing function spacing: const str="This is a \"quoted\" string"
+After removing newlines: const str="This is a \"quoted\" string"
+After removing bracket spaces: const str="This is a \"quoted\" string"
+Final result: const str="This is a \"quoted\" string"
+DEBUG: Minify function called
+Initial input: const regex = /test/g;
+After license preservation: const regex = /test/g;
+After removing single-line comments: const regex = /test/g;
+After removing multi-line comments: const regex = /test/g;
+After trimming whitespace: const regex = /test/g;
+After replacing multiple spaces: const regex = /test/g;
+After fixing operators: const regex=/test/g;
+After removing semicolons: const regex=/test/g;
+After fixing function spacing: const regex=/test/g;
+After removing newlines: const regex=/test/g;
+After removing bracket spaces: const regex=/test/g;
+Final result: const regex=/test/g;

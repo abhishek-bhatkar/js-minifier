@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -13,6 +12,23 @@ import (
 	"sync"
 	"time"
 )
+
+var debugFile *os.File
+
+func init() {
+	var err error
+	debugFile, err = os.OpenFile("debug.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to open debug file: %v\n", err)
+		return
+	}
+}
+
+func debugLog(format string, args ...interface{}) {
+	if debugFile != nil {
+		fmt.Fprintf(debugFile, format+"\n", args...)
+	}
+}
 
 // MinificationStats holds statistics about the minification process
 type MinificationStats struct {
@@ -97,7 +113,9 @@ func (m *Minifier) shortenVariableNames(code string) string {
 
 // Minify performs the minification process
 func (m *Minifier) Minify() string {
+	debugLog("DEBUG: Minify function called")
 	result := m.input
+	debugLog("Initial input: %s", result)
 
 	// Preserve license comments if requested
 	var licenseComment string
@@ -109,41 +127,54 @@ func (m *Minifier) Minify() string {
 			result = re.ReplaceAllString(result, "")
 		}
 	}
+	debugLog("After license preservation: %s", result)
 
 	// Remove single-line comments
 	re := regexp.MustCompile(`//.*`)
 	result = re.ReplaceAllString(result, "")
+	debugLog("After removing single-line comments: %s", result)
 
 	// Remove multi-line comments (except license)
 	re = regexp.MustCompile(`/\*[\s\S]*?\*/`)
 	result = re.ReplaceAllString(result, "")
+	debugLog("After removing multi-line comments: %s", result)
 
 	// Remove whitespace at the beginning and end of lines
 	re = regexp.MustCompile(`^\s+|\s+$`)
 	result = re.ReplaceAllString(result, "")
+	debugLog("After trimming whitespace: %s", result)
 
 	// Replace multiple spaces with a single space
 	re = regexp.MustCompile(`\s{2,}`)
 	result = re.ReplaceAllString(result, " ")
+	debugLog("After replacing multiple spaces: %s", result)
 
 	// Remove spaces around operators
-	operators := []string{`\+`, `-`, `\*`, `/`, `=`, `<`, `>`, `!`, `\?`, `:`, `&`, `\|`, `;`, `,`}
+	operators := []string{`+`, `-`, `*`, `/`, `=`, `<`, `>`, `!`, `?`, `:`, `&`, `|`, `;`, `,`}
 	for _, op := range operators {
-		re = regexp.MustCompile(`\s*` + op + `\s*`)
+		re = regexp.MustCompile(`\s*` + regexp.QuoteMeta(op) + `\s*`)
 		result = re.ReplaceAllString(result, op)
 	}
+	debugLog("After fixing operators: %s", result)
 
 	// Remove unnecessary semicolons
 	re = regexp.MustCompile(`;;+`)
 	result = re.ReplaceAllString(result, ";")
+	debugLog("After removing semicolons: %s", result)
 
 	// Remove spaces after function keywords and parentheses
 	re = regexp.MustCompile(`function\s+`)
-	result = re.ReplaceAllString(result, "function")
+	result = re.ReplaceAllString(result, "function ")
+
+	// Fix spaces between function name and parentheses
+	re = regexp.MustCompile(`([a-zA-Z0-9_$])\s*\(`)
+	result = re.ReplaceAllString(result, "$1(")
+	debugLog("After fixing function spacing: %s", result)
 
 	// Remove newlines
 	re = regexp.MustCompile(`\n+`)
 	result = re.ReplaceAllString(result, "")
+	debugLog("After removing newlines: %s", result)
 
 	// Remove spaces after commas
 	re = regexp.MustCompile(`,\s+`)
@@ -162,27 +193,34 @@ func (m *Minifier) Minify() string {
 	result = re.ReplaceAllString(result, "(")
 	re = regexp.MustCompile(`\s*\)\s*`)
 	result = re.ReplaceAllString(result, ")")
+	debugLog("After removing bracket spaces: %s", result)
 
 	if m.shortenVars {
 		result = m.shortenVariableNames(result)
+		debugLog("After shortening variables: %s", result)
 	}
 
 	if m.preserveLicense && licenseComment != "" {
 		result = licenseComment + result
 	}
 
+	debugLog("Final result: %s", result)
 	return result
 }
 
 // processFile minifies a single JavaScript file
 func processFile(inputPath, outputPath string, preserveLicense, shortenVars bool, stats chan<- MinificationStats) {
+	debugLog("DEBUG: Processing file: %s", inputPath)
+	
 	start := time.Now()
 
+	// Read input file
 	content, err := ioutil.ReadFile(inputPath)
 	if err != nil {
-		log.Printf("Error reading %s: %v\n", inputPath, err)
+		debugLog("Error reading input file: %v", err)
 		return
 	}
+	debugLog("File content: %s", string(content))
 
 	minifier := NewMinifier(string(content), preserveLicense, shortenVars)
 	minified := minifier.Minify()
@@ -194,7 +232,7 @@ func processFile(inputPath, outputPath string, preserveLicense, shortenVars bool
 
 	err = ioutil.WriteFile(outputPath, []byte(minified), 0644)
 	if err != nil {
-		log.Printf("Error writing %s: %v\n", outputPath, err)
+		debugLog("Error writing output file: %v", err)
 		return
 	}
 
@@ -215,7 +253,7 @@ func watchDirectory(dir string, preserveLicense, shortenVars bool) {
 	for {
 		files, err := filepath.Glob(filepath.Join(dir, "*.js"))
 		if err != nil {
-			log.Printf("Error scanning directory: %v\n", err)
+			debugLog("Error scanning directory: %v", err)
 			continue
 		}
 
@@ -231,11 +269,11 @@ func watchDirectory(dir string, preserveLicense, shortenVars bool) {
 
 			lastMod := fileModTimes[file]
 			if info.ModTime().After(lastMod) {
-				log.Printf("Processing modified file: %s\n", file)
+				debugLog("Processing modified file: %s", file)
 				stats := make(chan MinificationStats, 1)
 				processFile(file, "", preserveLicense, shortenVars, stats)
 				stat := <-stats
-				log.Printf("Reduced by %.2f%% (%d → %d bytes)\n", 
+				debugLog("Reduced by %.2f%% (%d → %d bytes)", 
 					stat.Reduction, stat.OriginalSize, stat.MinifiedSize)
 				fileModTimes[file] = info.ModTime()
 			}
@@ -246,32 +284,45 @@ func watchDirectory(dir string, preserveLicense, shortenVars bool) {
 }
 
 func main() {
-	// Define command line flags
-	inputFile := flag.String("input", "", "Input JavaScript file or directory")
-	outputFile := flag.String("output", "", "Output file path (optional)")
-	watchMode := flag.Bool("watch", false, "Watch mode - monitor directory for changes")
+	// Explicitly write to stderr
+	debugLog("DEBUG: Minification process started")
+	
+	input := flag.String("input", "", "Input JavaScript file or directory")
+	output := flag.String("output", "", "Output file or directory")
 	preserveLicense := flag.Bool("preserve-license", false, "Preserve license comments")
 	shortenVars := flag.Bool("shorten-vars", false, "Shorten variable names")
 	jsonOutput := flag.Bool("json", false, "Output statistics in JSON format")
+	watchMode := flag.Bool("watch", false, "Watch directory for changes")
 	flag.Parse()
 
-	if *inputFile == "" {
-		log.Fatal("Please provide an input file or directory using -input flag")
+	// Debug: Print all flags and their values directly to stderr
+	debugLog("DEBUG: Input: %s", *input)
+	debugLog("DEBUG: Output: %s", *output)
+	debugLog("DEBUG: Preserve License: %v", *preserveLicense)
+	debugLog("DEBUG: Shorten Vars: %v", *shortenVars)
+	debugLog("DEBUG: JSON Output: %v", *jsonOutput)
+	debugLog("DEBUG: Watch Mode: %v", *watchMode)
+
+	if *input == "" {
+		debugLog("Please provide an input file or directory using -input flag")
+		return
 	}
 
-	fileInfo, err := os.Stat(*inputFile)
+	fileInfo, err := os.Stat(*input)
 	if err != nil {
-		log.Fatalf("Error accessing input path: %v", err)
+		debugLog("Error accessing input path: %v", err)
+		return
 	}
 
 	if fileInfo.IsDir() {
 		if *watchMode {
-			log.Printf("Watching directory: %s\n", *inputFile)
-			watchDirectory(*inputFile, *preserveLicense, *shortenVars)
+			debugLog("Watching directory: %s", *input)
+			watchDirectory(*input, *preserveLicense, *shortenVars)
 		} else {
-			files, err := filepath.Glob(filepath.Join(*inputFile, "*.js"))
+			files, err := filepath.Glob(filepath.Join(*input, "*.js"))
 			if err != nil {
-				log.Fatalf("Error scanning directory: %v", err)
+				debugLog("Error scanning directory: %v", err)
+				return
 			}
 
 			var wg sync.WaitGroup
@@ -298,33 +349,33 @@ func main() {
 			for stat := range stats {
 				allStats = append(allStats, stat)
 				if !*jsonOutput {
-					fmt.Printf("Processed %s:\n", stat.InputFile)
-					fmt.Printf("  Output: %s\n", stat.OutputFile)
-					fmt.Printf("  Reduction: %.2f%% (%d → %d bytes)\n", 
+					debugLog("Processed %s:", stat.InputFile)
+					debugLog("  Output: %s", stat.OutputFile)
+					debugLog("  Reduction: %.2f%% (%d → %d bytes)", 
 						stat.Reduction, stat.OriginalSize, stat.MinifiedSize)
-					fmt.Printf("  Process time: %.2f ms\n\n", stat.ProcessTime)
+					debugLog("  Process time: %.2f ms", stat.ProcessTime)
 				}
 			}
 
 			if *jsonOutput {
 				jsonStats, _ := json.MarshalIndent(allStats, "", "  ")
-				fmt.Println(string(jsonStats))
+				debugLog("%s", string(jsonStats))
 			}
 		}
 	} else {
 		stats := make(chan MinificationStats, 1)
-		processFile(*inputFile, *outputFile, *preserveLicense, *shortenVars, stats)
+		processFile(*input, *output, *preserveLicense, *shortenVars, stats)
 		stat := <-stats
 
 		if *jsonOutput {
 			jsonStats, _ := json.MarshalIndent(stat, "", "  ")
-			fmt.Println(string(jsonStats))
+			debugLog("%s", string(jsonStats))
 		} else {
-			fmt.Printf("Processed %s:\n", stat.InputFile)
-			fmt.Printf("  Output: %s\n", stat.OutputFile)
-			fmt.Printf("  Reduction: %.2f%% (%d → %d bytes)\n", 
+			debugLog("Processed %s:", stat.InputFile)
+			debugLog("  Output: %s", stat.OutputFile)
+			debugLog("  Reduction: %.2f%% (%d → %d bytes)", 
 				stat.Reduction, stat.OriginalSize, stat.MinifiedSize)
-			fmt.Printf("  Process time: %.2f ms\n", stat.ProcessTime)
+			debugLog("  Process time: %.2f ms", stat.ProcessTime)
 		}
 	}
 }
