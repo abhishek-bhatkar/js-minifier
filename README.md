@@ -20,7 +20,7 @@ A powerful command-line utility written in Go to minify JavaScript files. This t
 2. Clone this repository
 3. Build the binary:
 ```bash
-go build
+go build -o js-minifier
 ```
 
 ## Usage
@@ -29,39 +29,39 @@ go build
 
 Minify a single file (creates .min.js):
 ```bash
-./jsminify -input script.js
+./js-minifier -input script.js
 ```
 
 Specify custom output file:
 ```bash
-./jsminify -input script.js -output custom.min.js
+./js-minifier -input script.js -output custom.min.js
 ```
 
 ### Advanced Features
 
 Process all JavaScript files in a directory:
 ```bash
-./jsminify -input ./src
+./js-minifier -input ./src
 ```
 
 Watch directory for changes:
 ```bash
-./jsminify -input ./src -watch
+./js-minifier -input ./src -watch
 ```
 
 Enable variable name shortening:
 ```bash
-./jsminify -input script.js -shorten-vars
+./js-minifier -input script.js -shorten-vars
 ```
 
 Preserve license comments:
 ```bash
-./jsminify -input script.js -preserve-license
+./js-minifier -input script.js -preserve-license
 ```
 
 Output statistics in JSON format:
 ```bash
-./jsminify -input script.js -json
+./js-minifier -input script.js -json
 ```
 
 ### Command Line Options
@@ -115,7 +115,7 @@ function calculateSum(a,b){const c=a+b;return c;}
 
 Process all .js files in src directory:
 ```bash
-./jsminify -input ./src -shorten-vars
+./js-minifier -input ./src -shorten-vars
 ```
 
 This will create minified versions of all JavaScript files:
@@ -126,7 +126,7 @@ This will create minified versions of all JavaScript files:
 
 Monitor directory for changes:
 ```bash
-./jsminify -input ./src -watch -preserve-license
+./js-minifier -input ./src -watch -preserve-license
 ```
 
 This will:
