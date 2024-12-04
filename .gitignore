@@ -5,6 +5,7 @@
 *.so
 *.dylib
 jsminify
+js-minifier
 
 # Test binary, built with `go test -c`
 *.test
@@ -19,4 +20,13 @@ vendor/
 .idea/
 .vscode/
 *.swp
-*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Debug logs
+debug.log

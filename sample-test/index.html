@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List - JS Minifier Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .todo-item.completed {
+            background-color: #f9f9f9;
+            text-decoration: line-through;
+            color: #666;
+        }
+        .todo-item button {
+            margin-left: auto;
+            background-color: #ff4444;
+        }
+        .todo-item button:hover {
+            background-color: #cc0000;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9e9e9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List Application</h1>
+        <div class="input-group">
+            <input type="text" id="todoInput" placeholder="Enter a new todo item">
+            <button onclick="addTodo()">Add Todo</button>
+        </div>
+        <div id="todoList"></div>
+        <div class="stats" id="stats"></div>
+    </div>
+    <script src="app.min.js"></script>
+</body>
+</html>
