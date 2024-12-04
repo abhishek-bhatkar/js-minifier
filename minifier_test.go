@@ -155,3 +155,102 @@ func TestEdgeCases(t *testing.T) {
 		})
 	}
 }
+
+// TestTodoAppMinification tests the minification of the todo list application
+func TestTodoAppMinification(t *testing.T) {
+	// Read the original todo app JavaScript
+	originalCode, err := ioutil.ReadFile("sample-test/app.js")
+	if err != nil {
+		t.Fatalf("Failed to read sample-test/app.js: %v", err)
+	}
+
+	// Test cases with different options
+	testCases := []struct {
+		name           string
+		preserveLicense bool
+		shortenVars    bool
+	}{
+		{
+			name:           "BasicMinification",
+			preserveLicense: false,
+			shortenVars:    false,
+		},
+		{
+			name:           "MinificationWithShortening",
+			preserveLicense: false,
+			shortenVars:    true,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			// Create minifier with test case options
+			minifier := NewMinifier(string(originalCode), tc.preserveLicense, tc.shortenVars)
+			result := minifier.Minify()
+
+			// Verify the minified code is valid JavaScript
+			if !isValidJavaScript(result) {
+				t.Errorf("Minified code is not valid JavaScript:\n%s", result)
+			}
+
+			// Check that essential features are preserved
+			essentialFeatures := []string{
+				"class",
+				"constructor",
+				"localStorage",
+				"document.createElement",
+			}
+
+			for _, feature := range essentialFeatures {
+				if !strings.Contains(result, feature) {
+					t.Errorf("Missing essential feature '%s' in minified code", feature)
+				}
+			}
+
+			// Verify the code is actually minified
+			if len(result) >= len(originalCode) {
+				t.Error("Minified code is not shorter than original code")
+			}
+
+			// Additional checks for shortened variables
+			if tc.shortenVars {
+				// Verify that the code contains shortened variable names (single letters)
+				singleLetterVars := []string{"a", "b", "c"}
+				foundShortened := false
+				for _, shortVar := range singleLetterVars {
+					if strings.Contains(result, shortVar+".") || strings.Contains(result, shortVar+"=") {
+						foundShortened = true
+						break
+					}
+				}
+				if !foundShortened {
+					t.Error("No shortened variable names found when variable shortening is enabled")
+				}
+			}
+		})
+	}
+}
+
+// isValidJavaScript performs basic validation of JavaScript code
+func isValidJavaScript(code string) bool {
+	// Check for basic syntax errors
+	if !strings.Contains(code, "{") || !strings.Contains(code, "}") {
+		return false
+	}
+
+	// Check for unmatched quotes
+	singleQuotes := strings.Count(code, "'")
+	doubleQuotes := strings.Count(code, "\"")
+	if singleQuotes%2 != 0 || doubleQuotes%2 != 0 {
+		return false
+	}
+
+	// Check for unmatched parentheses
+	openParens := strings.Count(code, "(")
+	closeParens := strings.Count(code, ")")
+	if openParens != closeParens {
+		return false
+	}
+
+	return true
+}
